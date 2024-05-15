@@ -146,3 +146,13 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
   // remove default margin from li
   margin: 0;
 }
+
+// /* Example scrollbar styles */
+// .simplebar-scrollbar::before {
+//   background-color: #888; /* Example thumb color */
+// }
+
+// /* Example scrollbar thumb hover styles */
+// .simplebar-scrollbar:hover::before {
+//   background-color: #555; /* Example thumb color on hover */
+// }

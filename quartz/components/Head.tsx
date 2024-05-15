@@ -44,6 +44,7 @@ export default (() => {
         {js
           .filter((resource) => resource.loadTime === "beforeDOMReady")
           .map((res) => JSResourceToScriptElement(res, true))}
+        {/* <link rel="stylesheet" href="./node_modules/simplebar/dist/simplebar.min.css" /> */}
       </head>
     )
   }

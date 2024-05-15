@@ -29,6 +29,7 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
   const slug = simplifySlug(fullSlug)
   const visited = getVisited()
   const graph = document.getElementById(container)
+  const isLocal = container === "graph-container";  //! CUSTOM
   if (!graph) return
   removeAllChildren(graph)
 
@@ -81,20 +82,50 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
 
   const neighbourhood = new Set<SimpleSlug>()
   const wl: (SimpleSlug | "__SENTINEL")[] = [slug, "__SENTINEL"]
-  if (depth >= 0) {
-    while (depth >= 0 && wl.length > 0) {
-      // compute neighbours
-      const cur = wl.shift()!
-      if (cur === "__SENTINEL") {
-        depth--
-        wl.push("__SENTINEL")
-      } else {
-        neighbourhood.add(cur)
+  
+  //! CUSTOM SECTION
+  // console.log("HELLO; WORLD!");
+  let i = 0;
+  if (isLocal) {
+
+    const queue: SimpleSlug[] = [slug];
+    const queue_depth: number[] = [0];
+    const hashmap: Record<SimpleSlug, boolean> = {};
+
+    while (queue.length > 0) {
+      const cur = queue.shift()!
+      const current_depth = queue_depth.shift()!
+      // console.log("H0 ", cur, current_depth)
+      
+      if (hashmap[cur]) continue
+      neighbourhood.add(cur);
+      hashmap[cur] = true;
+      
+      if (depth == -1 || current_depth < depth) {
         const outgoing = links.filter((l) => l.source === cur)
-        const incoming = links.filter((l) => l.target === cur)
-        wl.push(...outgoing.map((l) => l.target), ...incoming.map((l) => l.source))
+        const incoming: LinkData[] = [] // links.filter((l) => l.target === cur)
+        queue.push(...outgoing.map((l) => l.target), ...incoming.map((l) => l.source))
+        queue_depth.push(...Array(outgoing.length+incoming.length).fill(current_depth+1))
       }
     }
+
+    // while (depth >= 0 && wl.length > 0) {
+    //   // compute neighbours
+    //   const cur = wl.shift()!
+    //   console.log("cur", cur)
+    //   if (cur === "__SENTINEL") {
+    //     depth--
+    //     wl.push("__SENTINEL")
+    //     if (i == 1) break;
+    //     i++;
+    //   } else {
+    //     console.log("cur ADD", cur)
+    //     neighbourhood.add(cur)
+    //     const outgoing = links.filter((l) => l.source === cur)
+    //     const incoming: LinkData[] = links.filter((l) => l.target === cur)
+    //     wl.push(...outgoing.map((l) => l.target), ...incoming.map((l) => l.source))
+    //   }
+    // }
   } else {
     validLinks.forEach((id) => neighbourhood.add(id))
     if (showTags) tags.forEach((tag) => neighbourhood.add(tag))
@@ -124,7 +155,8 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
     )
     .force("center", d3.forceCenter().strength(centerForce))
 
-  const height = Math.max(graph.offsetHeight, 250)
+  // console.log("GRAPH", graph.offsetHeight);
+  const height = isLocal ? 450 : Math.max(graph.offsetHeight, 250)  //! CUSTOM
   const width = graph.offsetWidth
 
   const svg = d3
@@ -271,7 +303,7 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
     .attr("dy", (d) => -nodeRadius(d) + "px")
     .attr("text-anchor", "middle")
     .text((d) => d.text)
-    .style("opacity", (opacityScale - 1) / 3.75)
+    .style("opacity", (opacityScale - 0.25) / 0.75)  //! CUSTOM
     .style("pointer-events", "none")
     .style("font-size", fontSize + "em")
     .raise()
@@ -292,7 +324,8 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
           link.attr("transform", transform)
           node.attr("transform", transform)
           const scale = transform.k * opacityScale
-          const scaledOpacity = Math.max((scale - 1) / 3.75, 0)
+          const scaledOpacity = Math.max((scale - 0.25) / 0.75, 0)  //! CUSTOM
+          console.log(scale, (scale - 1), scaledOpacity);
           labels.attr("transform", transform).style("opacity", scaledOpacity)
         }),
     )
