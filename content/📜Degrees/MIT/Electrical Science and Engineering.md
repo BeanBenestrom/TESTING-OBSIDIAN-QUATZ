@@ -21,43 +21,27 @@ catalog: [6-1: Electrical Science and Engineering](https://www.eecs.mit.edu/acad
 <span class="sus-course">[[🎓Universities/MIT/6.3000 Signal Processing | 6.3000 Signal Processing]]</span>
 
 #### Three header subjects
-<span class="sus-course">[[🎓Universities/MIT/6.2210 Electromagnetic Fields, Forces and Motion|6.2210 Electromagnetic Fields, Forces and Motion]]</span>
-<span class="sus-course">[[🎓Universities/MIT/6.2300 Electromagnetics Waves and Applications|6.2300 Electromagnetics Waves and Applications]]</span>
-<span class="sus-course">[[🎓Universities/MIT/6.2500 Nanoelectronics and Computing Systems|6.2500 Nanoelectronics and Computing Systems]]</span>
-<span class="sus-course">[[🎓Universities/MIT/6.3010 Signals, Systems and Inference|6.3010 Signals, Systems and Inference]]</span>
-<span class="sus-course">[[🎓Universities/MIT/6.3900 Introduction to Machine Learning|6.3900 Introduction to Machine Learning]]</span>
+<span class="sus-course">[[../../🎓Universities/MIT/6.2210 Electromagnetic Fields, Forces and Motion|6.2210 Electromagnetic Fields, Forces and Motion]]</span>
+<span class="sus-course">[[../../🎓Universities/MIT/6.2300 Electromagnetics Waves and Applications|6.2300 Electromagnetics Waves and Applications]]</span>
+<span class="sus-course">[[../../🎓Universities/MIT/6.2500 Nanoelectronics and Computing Systems|6.2500 Nanoelectronics and Computing Systems]]</span>
+<span class="sus-course">[[../../🎓Universities/MIT/6.3010 Signals, Systems and Inference|6.3010 Signals, Systems and Inference]]</span>
+<span class="sus-course">[[../../🎓Universities/MIT/6.3900 Introduction to Machine Learning|6.3900 Introduction to Machine Learning]]</span>
 <span class="sus-course">[[🎓Universities/MIT/2.791J Cellular Neurophysiology and Computing | 2.791J Cellular Neurophysiology and Computing]]</span>
-<span class="sus-course">[[🎓Universities/MIT/6.2210 Electromagnetic Fields, Forces and Motion|6.2210 Electromagnetic Fields, Forces and Motion]]</span>
+<span class="sus-course">[[../../🎓Universities/MIT/6.2210 Electromagnetic Fields, Forces and Motion|6.2210 Electromagnetic Fields, Forces and Motion]]</span>
 
 #### Six elective subjects
-Two from [[AUS2]] 
-Four additional from [[EECS]]
+Two from [[../../🗃️Groups/MIT/AUS2|AUS2]] 
+Four additional from [[../../🗃️Groups/MIT/EECS|EECS]]
 
-```dataviewjs
-const main = async _ => {
-// --------------------------------
-// Load modules
-if (!module.exports.utility) dv.executeJs(await dv.io.load("Scripts/utility.js"));
-const UTILITY_MODULE = module.exports.utility;
-if (!module.exports.course) dv.executeJs(await dv.io.load("Scripts/course.js"));
-const COURSE_MODULE = module.exports.course;
-// Load tp
-let tp = this.app.plugins.getPlugin("templater-obsidian").templater.current_functions_object;
-if (!tp) { dv.paragraph("<font style='color: red'>tp not loaded!</font>"); return; }
-// Evaluate
-const courses = await UTILITY_MODULE.waitForElements(`.sus-course a`, {timeout:5});
-courses.forEach( course => { COURSE_MODULE.link_completion(tp, course, true); });
-// --------------------------------
-}; main();
-```
+
 
 ---
 
 #### Additional Constraints
-At least _one_ of your completed subjects must be from the [[DLAB2]]
-At least _one_ of your completed subjects must be from the [[II]]
-At least _one_ of your completed subjects must be from the [[PROB]]
-At least _two_ of your completed subjects must be from the [[CIM2]]
+At least _one_ of your completed subjects must be from the [[../../🗃️Groups/MIT/DLAB2|DLAB2]]
+At least _one_ of your completed subjects must be from the [[../../🗃️Groups/MIT/II|II]]
+At least _one_ of your completed subjects must be from the [[../../🗃️Groups/MIT/PROB|PROB]]
+At least _two_ of your completed subjects must be from the [[../../🗃️Groups/MIT/CIM2|CIM2]]
 
 #### Notes
 
