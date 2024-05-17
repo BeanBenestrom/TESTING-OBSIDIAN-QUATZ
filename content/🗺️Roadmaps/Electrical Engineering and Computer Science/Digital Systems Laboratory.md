@@ -1,14 +1,14 @@
 ---
-tags: [stage]
-ctime: "2024-04-25T17:32:40"
-
+tags:
+  - stage
+ctime: 2024-04-25T17:32:40
 completion: closed
 percentage: 0
-prereq: "None."
-coreq: "None."
+prereq: None.
+coreq: None.
 ---
 
-prev: [[Engineering for Impact]]
+prev: [[./Engineering for Impact|Engineering for Impact]]
 next: [...]
 
 ---
