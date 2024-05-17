@@ -24,7 +24,7 @@ interface GraphOptions {
   localGraph: Partial<D3Config> | undefined
   globalGraph: Partial<D3Config> | undefined
 }
-
+//
 const defaultOptions: GraphOptions = {
   localGraph: {
     drag: true,
