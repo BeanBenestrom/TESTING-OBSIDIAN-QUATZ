@@ -1,20 +1,20 @@
 ---
-tags: [stage]
-ctime: "2024-04-25T15:08:34"
-
+tags:
+  - stage
+ctime: 2024-04-25T15:08:34
 completion: closed
 percentage: 0
-prereq: "None."
-coreq: "None."
+prereq: None.
+coreq: None.
 ---
 
 prev: 
-[[Electrical Circuits, Modeling and Design of Physical Systems]]
-[[Dynamical System Modeling and Control Design]]
+[[./Electrical Circuits, Modeling and Design of Physical Systems|Electrical Circuits, Modeling and Design of Physical Systems]]
+[[./Dynamical System Modeling and Control Design|Dynamical System Modeling and Control Design]]
 next: 
-[[Design and Manufacturing I]]
-[[Computer Language Engineering]]
-[[Hardware Architecture for Deep Learning]]
+[[./Design and Manufacturing I|Design and Manufacturing I]]
+[[./Computer Language Engineering|Computer Language Engineering]]
+[[./Hardware Architecture for Deep Learning|Hardware Architecture for Deep Learning]]
 
 ---
 
