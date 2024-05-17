@@ -1,15 +1,15 @@
 ---
-tags: [stage]
-ctime: "2024-04-25T15:02:04"
-
+tags:
+  - stage
+ctime: 2024-04-25T15:02:04
 completion: closed
 percentage: 0
-prereq: "None."
-coreq: "None."
+prereq: None.
+coreq: None.
 ---
 
-prev: [[EE & CS Custom Degree - MIT]]
-next: [[Introduction to Algorithms]]
+prev: [[./EE & CS Custom Degree - MIT|EE & CS Custom Degree - MIT]]
+next: [[./Introduction to Algorithms|Introduction to Algorithms]]
 
 ---
 
