@@ -11,26 +11,7 @@ catalog: [bulletin](https://catalog.mit.edu/mit/undergraduate-education/general-
 
 <span style="display: block; padding: 15px; background-color: rgb(100, 100, 100, 0.2);"><font id="m_prereq_bio_gir" style="display: block; font-family: Arial, sans-serif; font-weight: bold; padding: 5px">Biology</font><br><span id="prereq_bio_gir">( [[🎓Universities/MIT/7.012 Introductory Biology | 7.012]], [[🎓Universities/MIT/7.013 Introductory Biology | 7.013]], [[🎓Universities/MIT/7.014 Introductory Biology | 7.014]], [[🎓Universities/MIT/7.015 Introductory Biology | 7.015]], or [[🎓Universities/MIT/7.016 Introductory Biology | 7.016]] )</span></span>
 
-```dataviewjs
-const main = async _ => {
-// --------------------------------
-// Load modules
-if (!module.exports.utility) dv.executeJs(await dv.io.load("Scripts/utility.js"));
-const UTILITY_MODULE = module.exports.utility;
-if (!module.exports.course) dv.executeJs(await dv.io.load("Scripts/course.js"));
-const COURSE_MODULE = module.exports.course;
-// Load tp
-let tp = this.app.plugins.getPlugin("templater-obsidian").templater.current_functions_object;
-if (!tp) { dv.paragraph("<font style='color: red'>tp not loaded!</font>"); return; }
-// Evaluate
-await UTILITY_MODULE.waitForElements(`#m_prereq_bio_gir`, {timeout:5});
-COURSE_MODULE.evaluate_req("_chem_gir", "prereq", UTILITY_MODULE, dv, tp, "Chemistry"  );
-COURSE_MODULE.evaluate_req("_phy_gir" , "prereq", UTILITY_MODULE, dv, tp, "Physics"    );
-COURSE_MODULE.evaluate_req("_math_gir", "prereq", UTILITY_MODULE, dv, tp, "Mathematics");
-COURSE_MODULE.evaluate_req("_bio_gir" , "prereq", UTILITY_MODULE, dv, tp, "Biology"    );
-// --------------------------------
-}; main();
-```
+
 
 #### Communication Requirement
 <font style="color: red">MISSING</font>
@@ -164,23 +145,7 @@ The following combinations of six-unit subjects also count toward the REST Requi
 <span class="sus-course">[[🎓Universities/MIT/22.09 Principles of Nuclear Radiation Measurement and Protection | 22.09 Principles of Nuclear Radiation Measurement and Protection]]</span>
 <span class="sus-course">[[🎓Universities/MIT/24.909 Field Methods in Linguistics | 24.909 Field Methods in Linguistics]]</span>
 
-```dataviewjs
-const main = async _ => {
-// --------------------------------
-// Load modules
-if (!module.exports.utility) dv.executeJs(await dv.io.load("Scripts/utility.js"));
-const UTILITY_MODULE = module.exports.utility;
-if (!module.exports.course) dv.executeJs(await dv.io.load("Scripts/course.js"));
-const COURSE_MODULE = module.exports.course;
-// Load tp
-let tp = this.app.plugins.getPlugin("templater-obsidian").templater.current_functions_object;
-if (!tp) { dv.paragraph("<font style='color: red'>tp not loaded!</font>"); return; }
-// Evaluate
-const courses = await UTILITY_MODULE.waitForElements(`.sus-course a`, {timeout:5});
-courses.forEach( course => { COURSE_MODULE.link_completion(tp, course, true); });
-// --------------------------------
-}; main();
-```
+
 
 #### Physical Education and Wellness Requirement
 <font style="color: red">MISSING</font>
