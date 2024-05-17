@@ -6,8 +6,8 @@ catalog: [6-3: Computer Science and Engineering](https://www.eecs.mit.edu/academ
 
 #### Two programming skills subjects
 One of 
-<span class="sus-course">[[🎓Universities/MIT/6.100A Introduction to Computer Science Programming in Python|6.100A Introduction to Computer Science Programming in Python]]</span>
-<span class="sus-course">[[🎓Universities/MIT/6.100L Introduction to Computer Science and Programming|6.100L Introduction to Computer Science and Programming]]</span>
+<span class="sus-course">[[../../🎓Universities/MIT/6.100A Introduction to Computer Science Programming in Python|6.100A Introduction to Computer Science Programming in Python]]</span>
+<span class="sus-course">[[../../🎓Universities/MIT/6.100L Introduction to Computer Science and Programming|6.100L Introduction to Computer Science and Programming]]</span>
 
 One of 
 <span class="sus-course">[[🎓Universities/MIT/6.1903 Introduction to Low,level Programming in C and Assembly | 6.1903 Introduction to Low,level Programming in C and Assembly]]</span>
@@ -27,7 +27,7 @@ One of
 #### Three foundation subjects
 <span class="sus-course">[[🎓Universities/MIT/6.1010 Fundamentals of Programming | 6.1010 Fundamentals of Programming]]</span>
 <span class="sus-course">[[🎓Universities/MIT/6.1210 Introduction to Algorithms | 6.1210 Introduction to Algorithms]]</span>
-<span class="sus-course">[[🎓Universities/MIT/6.1910 Computation Structures|6.1910 Computation Structures]]</span>
+<span class="sus-course">[[../../🎓Universities/MIT/6.1910 Computation Structures|6.1910 Computation Structures]]</span>
 
 #### Three header subjects
 <span class="sus-course">[[🎓Universities/MIT/6.1020 Software Construction | 6.1020 Software Construction]]</span>
@@ -40,29 +40,13 @@ One of
 #### Six elective subjects
 Two additional from a [CS Track](https://eecsis.mit.edu/degree_requirements.html#track)
 Two additional from a different [AI+D, CS, or EE Track](https://eecsis.mit.edu/degree_requirements.html#track)
-Two additional from [[EECS]] list
+Two additional from [[../../🗃️Groups/MIT/EECS|EECS]] list
 
-```dataviewjs
-const main = async _ => {
-// --------------------------------
-// Load modules
-if (!module.exports.utility) dv.executeJs(await dv.io.load("Scripts/utility.js"));
-const UTILITY_MODULE = module.exports.utility;
-if (!module.exports.course) dv.executeJs(await dv.io.load("Scripts/course.js"));
-const COURSE_MODULE = module.exports.course;
-// Load tp
-let tp = this.app.plugins.getPlugin("templater-obsidian").templater.current_functions_object;
-if (!tp) { dv.paragraph("<font style='color: red'>tp not loaded!</font>"); return; }
-// Evaluate
-const courses = await UTILITY_MODULE.waitForElements(`.sus-course a`, {timeout:5});
-courses.forEach( course => { COURSE_MODULE.link_completion(tp, course, true); });
-// --------------------------------
-}; main();
-```
+
 
 ---
 
 #### Additional Constraints
-At least two of your completed subjects must be from the [[AUS2]] list
-At least two of your completed subjects must be from the [[CIM2]] list
-At least one of your completed subjects must be from the [[II]] list
+At least two of your completed subjects must be from the [[../../🗃️Groups/MIT/AUS2|AUS2]] list
+At least two of your completed subjects must be from the [[../../🗃️Groups/MIT/CIM2|CIM2]] list
+At least one of your completed subjects must be from the [[../../🗃️Groups/MIT/II|II]] list
