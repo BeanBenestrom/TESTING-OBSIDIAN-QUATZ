@@ -1,0 +1,18 @@
+---
+level: {level}
+subject: {subject}
+university: MIT
+completion: {completion}
+percentage: {percentage}
+---
+
+catalog: {catalog}
+prerequisites: {prereq}
+corequisites : {coreq}
+
+Description:
+{desc}
+
+---
+
+<< HELLO, WORLD >>

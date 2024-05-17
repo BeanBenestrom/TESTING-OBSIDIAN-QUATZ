@@ -201,9 +201,9 @@ export function renderPage(
       ))}
     </div>
   )
-
+  //! CUSTOM
   const RightComponent = (
-    <div class="right sidebar">
+    <div class="right sidebar overflow">   
       {right.map((BodyComponent) => (
         <BodyComponent {...componentData} />
       ))}

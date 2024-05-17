@@ -5,6 +5,7 @@ $link-color: #79a9ec;
 $link-color-hover: #afcbf4;
 $page-padding: 4rem;
 $left-panel-width: calc($sidePanelWidth * 0.8);
+$right-panel-padding: 0.2rem;
 $center-border-size: 1px;
 $body-background-color: #161616;
 $graph-background-color: $body-background-color;    // var(--light)
@@ -32,6 +33,10 @@ a.internal:not(.tag-link), a.external {
 
 @media all and (min-width: $fullPageWidth) {
 
+    html {
+        // scrollbar-width: none;
+    }
+
     .page {
         & article {
     
@@ -52,9 +57,9 @@ a.internal:not(.tag-link), a.external {
             }
     
             & .sidebar.right {
-                right: 0;
-                width: calc(100vw - $left-panel-width - $pageWidth - 2 * $page-padding);
-                overflow: auto;
+                right: $right-panel-padding; // bottom: -1;
+                width: calc(100vw - $left-panel-width - $pageWidth - 2 * $page-padding - $right-panel-padding);
+                flex-wrap: nowrap;
             }
         }
     
@@ -112,6 +117,39 @@ h1.page-title > a {
     font-weight: bold;
 }
 
+ul.overflow,
+ol.overflow, .sidebar.overflow {
+    scrollbar-width: thin;
+}
+
+.sidebar.overflow {
+  max-height: calc(100vh - $topSpacing);
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  // clearfix
+  content: "";
+  clear: both;
+
+  & > li:last-of-type {
+    margin-bottom: 30px;
+  }
+
+  &:after {
+    pointer-events: none;
+    content: "";
+    width: calc(100vw - $left-panel-width - $pageWidth - 2 * $page-padding - 2 * $center-border-size - $right-panel-padding - 15px);
+    height: 50px;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    background: linear-gradient(transparent 0px, var(--light));
+    z-index: 10;
+  }
+}
+
 //* SEARCH
 
 .search {
@@ -129,7 +167,6 @@ h1.page-title > a {
 }
 
 #explorer-ul {
-    scrollbar-width: thin;
     li {
         margin-right: 2px;
     }
@@ -198,6 +235,14 @@ li:has(.folder-container) {
     }
 }
 
+
+//* Backlinks
+
+@media all and (min-width: $fullPageWidth) {
+    .sidebar.right {
+        // asd
+    }
+}
 
 // @media all and (min-width: $fullPageWidth) {
 //     #c-explorer-fade {

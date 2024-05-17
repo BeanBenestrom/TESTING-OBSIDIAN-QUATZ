@@ -49,7 +49,7 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
   } = JSON.parse(graph.dataset["cfg"]!)
 
   const data: Map<SimpleSlug, ContentDetails> = new Map(
-    Object.entries<ContentDetails>(await fetchData).map(([k, v]) => [
+    Object.entries<ContentDetails>(await (async () => { let d = await fetchData; console.log(d); return d; })()).map(([k, v]) => [
       simplifySlug(k as FullSlug),
       v,
     ]),
@@ -86,26 +86,51 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
   //! CUSTOM SECTION
   // console.log("HELLO; WORLD!");
   let i = 0;
+  const show_orphans = false;
+  const keep_connection: boolean[] = Array(links.length).fill(true);
+  let global_depth = 0;
+
   if (isLocal) {
 
     const queue: SimpleSlug[] = [slug];
     const queue_depth: number[] = [0];
     const hashmap: Record<SimpleSlug, boolean> = {};
+    const hashmap_temporary_bucket: SimpleSlug[] = [];
+    hashmap[slug] = true;
+    neighbourhood.add(slug);
+
+    const neighboring_links_function = (cur: SimpleSlug, conn1: SimpleSlug, conn2: SimpleSlug, i: number) => {
+      if (conn1 !== cur) return false;
+          
+        if (hashmap[conn2]) { 
+          keep_connection[i] = false;
+          return false;
+        }
+        neighbourhood.add(conn2)
+        return true;
+    }
 
     while (queue.length > 0) {
       const cur = queue.shift()!
       const current_depth = queue_depth.shift()!
       // console.log("H0 ", cur, current_depth)
+
+      if (global_depth != current_depth) {
+        // console.log("--------------")
+        // console.log(current_depth)
+        global_depth = current_depth
+
+        hashmap_temporary_bucket.forEach((l) => { hashmap[l] = true; });
+        hashmap_temporary_bucket.length = 0;
+      }
       
-      if (hashmap[cur]) continue
-      neighbourhood.add(cur);
-      hashmap[cur] = true;
-      
-      if (depth == -1 || current_depth < depth) {
-        const outgoing = links.filter((l) => l.source === cur)
-        const incoming: LinkData[] = [] // links.filter((l) => l.target === cur)
+      if (depth == -1 || current_depth <= depth) {   
+        const outgoing = links.filter((l, i) => neighboring_links_function(cur, l.source, l.target, i))
+        let incoming: LinkData[] = [] // links.filter((l) => l.target === cur)
+        if (!isLocal) incoming = links.filter((l) => neighboring_links_function(cur, l.target, l.source, i));
         queue.push(...outgoing.map((l) => l.target), ...incoming.map((l) => l.source))
         queue_depth.push(...Array(outgoing.length+incoming.length).fill(current_depth+1))
+        hashmap_temporary_bucket.push(...outgoing.map((l) => l.target), ...incoming.map((l) => l.source))
       }
     }
 
@@ -127,7 +152,16 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
     //   }
     // }
   } else {
-    validLinks.forEach((id) => neighbourhood.add(id))
+    const hashmap: Record<SimpleSlug, boolean> = {};
+    if (!show_orphans) {
+      links.forEach(l => { 
+        if (!hashmap[l.target] || !hashmap[l.source])  {
+          hashmap[l.target] = true; 
+          hashmap[l.source] = true; 
+        }
+      })
+    }
+    validLinks.forEach((id) => { if (show_orphans || hashmap[id]) neighbourhood.add(id) })
     if (showTags) tags.forEach((tag) => neighbourhood.add(tag))
   }
 
@@ -140,7 +174,7 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
         tags: data.get(url)?.tags ?? [],
       }
     }),
-    links: links.filter((l) => neighbourhood.has(l.source) && neighbourhood.has(l.target)),
+    links: links.filter((l, i) => neighbourhood.has(l.source) && neighbourhood.has(l.target) && keep_connection[i]),
   }
 
   const simulation: d3.Simulation<NodeData, LinkData> = d3
@@ -191,14 +225,45 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
     }
   }
 
+  const highlight_graph = (linkNodes: d3.Selection<d3.BaseType, unknown, HTMLElement, any>) => {
+    // fade out non-neighbour nodes
+    connectedNodes = linkNodes.data().flatMap((d: any) => [d.source.id, d.target.id])
+
+    d3.selectAll<HTMLElement, NodeData>(".link")
+      .transition()
+      .duration(200)
+      .style("opacity", 0.2)
+    d3.selectAll<HTMLElement, NodeData>(".node")
+      .filter((d) => !connectedNodes.includes(d.id))
+      .transition()
+      .duration(200)
+      .style("opacity", 0.2)
+    //! CUSTOM
+      d3.selectAll<HTMLElement, NodeData>("text")
+      .filter((d) => !connectedNodes.includes(d.id))
+      .transition()
+      .duration(200)
+      .style("opacity", 0.2)
+  };
+  const de_highlight_graph = () => {
+    d3.selectAll<HTMLElement, NodeData>(".link").transition().duration(200).style("opacity", 1)
+    d3.selectAll<HTMLElement, NodeData>(".node").transition().duration(200).style("opacity", 1)
+    d3.selectAll<HTMLElement, NodeData>("text").transition().duration(200).style("opacity", 1)  //! CUSTOM
+  };
+
+  let DRAGGING = false;
+  let ONTOP    = false;
+  let K_ZOOM   = 1;
   const drag = (simulation: d3.Simulation<NodeData, LinkData>) => {
     function dragstarted(event: any, d: NodeData) {
       if (!event.active) simulation.alphaTarget(1).restart()
       d.fx = d.x
       d.fy = d.y
+      DRAGGING = true;
     }
 
     function dragged(event: any, d: NodeData) {
+      console.log(event.x, event.y)
       d.fx = event.x
       d.fy = event.y
     }
@@ -207,6 +272,8 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
       if (!event.active) simulation.alphaTarget(0)
       d.fx = null
       d.fy = null
+      DRAGGING = false;
+      if (!ONTOP) de_highlight_graph();
     }
 
     const noop = () => {}
@@ -219,7 +286,7 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
 
   function nodeRadius(d: NodeData) {
     const numLinks = links.filter((l: any) => l.source.id === d.id || l.target.id === d.id).length
-    return 2 + Math.sqrt(numLinks)
+    return (2 * 2 + Math.sqrt(numLinks))   //! CUSTOM
   }
 
   let connectedNodes: SimpleSlug[] = []
@@ -237,25 +304,13 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
       window.spaNavigate(new URL(targ, window.location.toString()))
     })
     .on("mouseover", function (_, d) {
+      ONTOP = true;
       const currentId = d.id
       const linkNodes = d3
         .selectAll(".link")
         .filter((d: any) => d.source.id === currentId || d.target.id === currentId)
 
-      if (focusOnHover) {
-        // fade out non-neighbour nodes
-        connectedNodes = linkNodes.data().flatMap((d: any) => [d.source.id, d.target.id])
-
-        d3.selectAll<HTMLElement, NodeData>(".link")
-          .transition()
-          .duration(200)
-          .style("opacity", 0.2)
-        d3.selectAll<HTMLElement, NodeData>(".node")
-          .filter((d) => !connectedNodes.includes(d.id))
-          .transition()
-          .duration(200)
-          .style("opacity", 0.2)
-      }
+      if (focusOnHover && !DRAGGING) highlight_graph(linkNodes);
 
       // highlight links
       linkNodes.transition().duration(200).attr("stroke", "var(--gray)").attr("stroke-width", 1)
@@ -274,10 +329,9 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
         .style("font-size", bigFont + "em")
     })
     .on("mouseleave", function (_, d) {
-      if (focusOnHover) {
-        d3.selectAll<HTMLElement, NodeData>(".link").transition().duration(200).style("opacity", 1)
-        d3.selectAll<HTMLElement, NodeData>(".node").transition().duration(200).style("opacity", 1)
-      }
+      ONTOP = false;
+      if (focusOnHover && !DRAGGING) de_highlight_graph();
+      
       const currentId = d.id
       const linkNodes = d3
         .selectAll(".link")
@@ -317,16 +371,17 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
         .zoom<SVGSVGElement, NodeData>()
         .extent([
           [0, 0],
-          [width, height],
+          isLocal ? [width, height] : [width*1.5, height*1.6],
         ])
         .scaleExtent([0.25, 4])
         .on("zoom", ({ transform }) => {
+          K_ZOOM = 1/transform.k;
           link.attr("transform", transform)
           node.attr("transform", transform)
           const scale = transform.k * opacityScale
-          const scaledOpacity = Math.max((scale - 0.25) / 0.75, 0)  //! CUSTOM
-          console.log(scale, (scale - 1), scaledOpacity);
-          labels.attr("transform", transform).style("opacity", scaledOpacity)
+          // const scaledOpacity = Math.max((scale - 0.25) / 0.75, 0) * (ONTOP || DRAGGING ? 1 : 0)   //! CUSTOM
+          // console.log(scale, (scale - 1), scaledOpacity);
+          labels.attr("transform", transform) // .style("opacity", scaledOpacity)
         }),
     )
   }
