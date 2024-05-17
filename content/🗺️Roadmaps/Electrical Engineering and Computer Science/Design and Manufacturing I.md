@@ -1,15 +1,15 @@
 ---
-tags: [stage]
-ctime: "2024-04-25T17:31:39"
-
+tags:
+  - stage
+ctime: 2024-04-25T17:31:39
 completion: closed
 percentage: 0
-prereq: "None."
-coreq: "None."
+prereq: None.
+coreq: None.
 ---
 
-prev: [[Engineering for Impact]]
-next: [[Robotic Manipulation]]
+prev: [[./Engineering for Impact|Engineering for Impact]]
+next: [[./Robotic Manipulation|Robotic Manipulation]]
 
 ---
 
