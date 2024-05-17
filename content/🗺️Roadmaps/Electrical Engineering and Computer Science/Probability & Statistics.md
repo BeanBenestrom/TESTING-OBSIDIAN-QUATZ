@@ -1,15 +1,15 @@
 ---
-tags: [stage]
-ctime: "2024-04-25T15:12:56"
-
+tags:
+  - stage
+ctime: 2024-04-25T15:12:56
 completion: closed
 percentage: 0
-prereq: "None."
-coreq: "None."
+prereq: None.
+coreq: None.
 ---
 
-prev: [[Introduction to C and Assembly]]
-next: [[p1]]
+prev: [[./Introduction to C and Assembly|Introduction to C and Assembly]]
+next: [[./p1|p1]]
 
 ---
 
