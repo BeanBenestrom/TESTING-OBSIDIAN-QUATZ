@@ -24,23 +24,7 @@ catalog: [Course 18 Option 3: Pure Option](https://math.mit.edu/academics/underg
 <span class="sus-course">[[🎓Universities/MIT/18.904 Seminar in Topology | 18.904 Seminar in Topology]]</span>
 <span class="sus-course">[[🎓Universities/MIT/18.994 Seminar in Geometry | 18.994 Seminar in Geometry]]</span>
 
-```dataviewjs
-const main = async _ => {
-// --------------------------------
-// Load modules
-if (!module.exports.utility) dv.executeJs(await dv.io.load("Scripts/utility.js"));
-const UTILITY_MODULE = module.exports.utility;
-if (!module.exports.course) dv.executeJs(await dv.io.load("Scripts/course.js"));
-const COURSE_MODULE = module.exports.course;
-// Load tp
-let tp = this.app.plugins.getPlugin("templater-obsidian").templater.current_functions_object;
-if (!tp) { dv.paragraph("<font style='color: red'>tp not loaded!</font>"); return; }
-// Evaluate
-const courses = await UTILITY_MODULE.waitForElements(`.sus-course a`, {timeout:5});
-courses.forEach( course => { COURSE_MODULE.link_completion(tp, course, true); });
-// --------------------------------
-}; main();
-```
+
 
 #### Two Restricted Electives
 
