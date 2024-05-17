@@ -14,10 +14,10 @@ deadline:
 groupColor: 
 groups: 
 sortType: 
-order:
+order: 
 ---
 
-next: [[Basics of Programming]], [[Mathematics for Computer Science - Discrete Mathematics]]
+next: [[./Basics of Programming|Basics of Programming]], [[./Mathematics for Computer Science - Discrete Mathematics|Mathematics for Computer Science - Discrete Mathematics]]
 
 ---
 
