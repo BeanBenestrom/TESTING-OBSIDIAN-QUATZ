@@ -1,10 +1,10 @@
-based upon: [[📜Degrees/MIT/Electrical Engineering and Computer Science|Electrical Engineering and Computer Science]]
+based upon: [[../Electrical Engineering and Computer Science|Electrical Engineering and Computer Science]]
 
 # Requirements (2022)
 
 #### Four fundamental subjects
 
-<span class="sus-course">[[🎓Universities/MIT/6.100A Introduction to Computer Science Programming in Python|6.100A Introduction to Computer Science Programming in Python]]</span>
+<span class="sus-course">[[../../../🎓Universities/MIT/6.100A Introduction to Computer Science Programming in Python|6.100A Introduction to Computer Science Programming in Python]]</span>
 <span class="sus-course">[[🎓Universities/MIT/18.062J Mathematics for Computer Science | 6.1200 Mathematics for Computer Science]]</span>
 <span class="sus-course">[[🎓Universities/MIT/6.1903 Introduction to Low,level Programming in C and Assembly | 6.1903 Introduction to Low,level Programming in C and Assembly]]</span>
 <span class="sus-course">[[🎓Universities/MIT/6.1210 Introduction to Algorithms | 6.1210 Introduction to Algorithms]]</span>
@@ -16,9 +16,9 @@ One of
 <span class="sus-course">[[🎓Universities/MIT/18.05 Introduction to Probability and Statistics | 18.05 Introduction to Probability and Statistics]]</span>
 
 #### Four system design subjects
-<span class="sus-course">[[🎓Universities/MIT/6.1910 Computation Structures|6.1910 Computation Structures]]</span>
-<span class="sus-course">[[🎓Universities/MIT/6.2000 Electrical Circuits, Modeling and Design of Physical Systems|6.2000 Electrical Circuits, Modeling and Design of Physical Systems]]</span>
-<span class="sus-course">[[🎓Universities/MIT/6.3100 Dynamical System Modeling and Control Design| 6.3100 Dynamical System Modeling and Control Design]]</span>
+<span class="sus-course">[[../../../🎓Universities/MIT/6.1910 Computation Structures|6.1910 Computation Structures]]</span>
+<span class="sus-course">[[../../../🎓Universities/MIT/6.2000 Electrical Circuits, Modeling and Design of Physical Systems|6.2000 Electrical Circuits, Modeling and Design of Physical Systems]]</span>
+<span class="sus-course">[[../../../🎓Universities/MIT/6.3100 Dynamical System Modeling and Control Design| 6.3100 Dynamical System Modeling and Control Design]]</span>
 <span class="sus-course">[[🎓Universities/MIT/6.9000 Engineering for Impact | 6.9000 Engineering for Impact]]</span>
 
 #### Six elective subjects
@@ -29,23 +29,7 @@ One of
 <span class="sus-course">[[🎓Universities/MIT/6.5930 Hardware Architecture for Deep Learning | 6.5930 Hardware Architecture for Deep Learning]]</span>
 <span class="sus-course">[[🎓Universities/MIT/6.1810 Operating System Engineering | 6.1810 Operating System Engineering]]</span> --> *graduate* 6.828 Operating System Engineering
 
-```dataviewjs
-const main = async _ => {
-// --------------------------------
-// Load modules
-if (!module.exports.utility) dv.executeJs(await dv.io.load("Scripts/utility.js"));
-const UTILITY_MODULE = module.exports.utility;
-if (!module.exports.course) dv.executeJs(await dv.io.load("Scripts/course.js"));
-const COURSE_MODULE = module.exports.course;
-// Load tp
-let tp = this.app.plugins.getPlugin("templater-obsidian").templater.current_functions_object;
-if (!tp) { dv.paragraph("<font style='color: red'>tp not loaded!</font>"); return; }
-// Evaluate
-const courses = await UTILITY_MODULE.waitForElements(`.sus-course a`, {timeout:5});
-courses.forEach( course => { COURSE_MODULE.link_completion(tp, course, true); });
-// --------------------------------
-}; main();
-```
+
 
 ---
 
