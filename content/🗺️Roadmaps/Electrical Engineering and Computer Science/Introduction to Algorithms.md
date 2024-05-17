@@ -1,15 +1,15 @@
 ---
-tags: [stage]
-ctime: "2024-04-25T15:12:37"
-
+tags:
+  - stage
+ctime: 2024-04-25T15:12:37
 completion: closed
 percentage: 0
-prereq: "None."
-coreq: "None."
+prereq: None.
+coreq: None.
 ---
 
-prev: [[Basics of Programming]], [[Mathematics for Computer Science - Discrete Mathematics]]
-next: [[Introduction to C and Assembly]]
+prev: [[./Basics of Programming|Basics of Programming]], [[./Mathematics for Computer Science - Discrete Mathematics|Mathematics for Computer Science - Discrete Mathematics]]
+next: [[./Introduction to C and Assembly|Introduction to C and Assembly]]
 
 ---
 
