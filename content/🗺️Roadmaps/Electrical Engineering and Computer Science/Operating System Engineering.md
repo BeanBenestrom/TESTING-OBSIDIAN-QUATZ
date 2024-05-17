@@ -1,14 +1,14 @@
 ---
-tags: [stage]
-ctime: "2024-04-25T15:10:09"
-
+tags:
+  - stage
+ctime: 2024-04-25T15:10:09
 completion: closed
 percentage: 0
-prereq: "None."
-coreq: "None."
+prereq: None.
+coreq: None.
 ---
 
-prev: [[Computer Language Engineering]]
+prev: [[./Computer Language Engineering|Computer Language Engineering]]
 next: [...]
 
 ---
