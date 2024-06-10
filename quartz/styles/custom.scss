@@ -122,32 +122,35 @@ ol.overflow, .sidebar.overflow {
     scrollbar-width: thin;
 }
 
-.sidebar.overflow {
-  max-height: calc(100vh - $topSpacing);
-  overflow-y: auto;
-  overflow-x: hidden;
+@media all and (min-width: $fullPageWidth) {
 
-  // clearfix
-  content: "";
-  clear: both;
+    .sidebar.overflow {
+        max-height: calc(100vh - $topSpacing);
+        overflow-y: auto;
+        overflow-x: hidden;
 
-  & > li:last-of-type {
-    margin-bottom: 30px;
-  }
+        // clearfix
+        content: "";
+        clear: both;
 
-  &:after {
-    pointer-events: none;
-    content: "";
-    width: calc(100vw - $left-panel-width - $pageWidth - 2 * $page-padding - 2 * $center-border-size - $right-panel-padding - 15px);
-    height: 50px;
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-    background: linear-gradient(transparent 0px, var(--light));
-    z-index: 10;
-  }
+        & > li:last-of-type {
+            margin-bottom: 30px;
+        }
+
+        &:after {
+            pointer-events: none;
+            content: "";
+            width: calc(100vw - $left-panel-width - $pageWidth - 2 * $page-padding - 2 * $center-border-size - $right-panel-padding - 15px);
+            height: 50px;
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            background: linear-gradient(transparent 0px, var(--light));
+            z-index: 10;
+        }
+    }
 }
 
 //* SEARCH
